@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Modal } from "antd";
 
 import { createAvatar } from "../../utils/avatar";
@@ -44,13 +44,29 @@ const UserDetailCard = ({
   };
 
   const handleClose = () => {
-    setOpen(false);
-    onSubmit(userInput, id);
+    if (
+      userInput.name !== "" &&
+      userInput.email !== "" &&
+      userInput.phone !== "" &&
+      userInput.website !== ""
+    ) {
+      setOpen(false);
+      onSubmit(userInput, id);
+    }
   };
 
   const handleHeartClick = () => {
     setIsClicked(!isClicked);
   };
+
+  useEffect(() => {
+    setUserInput({
+      name: name,
+      email: email,
+      phone: phone,
+      website: website,
+    });
+  }, [name, email, phone, website]);
 
   return (
     <>
@@ -93,7 +109,10 @@ const UserDetailCard = ({
 
         <Meta
           description={
-            <TypographyWithIcon Icon={GlobalOutlined} text={website} />
+            <TypographyWithIcon
+              Icon={GlobalOutlined}
+              text={`http://${website}`}
+            />
           }
         />
       </Card>
@@ -108,9 +127,7 @@ const UserDetailCard = ({
           <div className="body">
             <TextFields
               label="Name"
-              value={
-                userInput.name ? userInput.name : name
-              }
+              value={userInput.name}
               name="name"
               type="text"
               onChange={onChange}
@@ -119,9 +136,7 @@ const UserDetailCard = ({
             />
             <TextFields
               label="Email"
-              value={
-                userInput.email ? userInput.email : email
-              }
+              value={userInput.email}
               name="email"
               type="email"
               onChange={onChange}
@@ -130,9 +145,7 @@ const UserDetailCard = ({
             />
             <TextFields
               label="Phone"
-              value={
-                userInput.phone ? userInput.phone : phone
-              }
+              value={userInput.phone}
               name="phone"
               type="text"
               onChange={onChange}
@@ -141,9 +154,7 @@ const UserDetailCard = ({
             />
             <TextFields
               label="Website"
-              value={
-                userInput.website ? userInput.website : website
-              }
+              value={userInput.website}
               name="website"
               type="text"
               onChange={onChange}

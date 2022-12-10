@@ -22,7 +22,7 @@ const TextFields = ({
   console.log("value", defaultValue);
   return (
     <div className="inputWrapper">
-      <Typography className="bodyTypo">{label}:</Typography>
+      <Typography className="bodyTypo"><span style={{ color: "red" }}>*</span> {label}:</Typography>
       <Input
         id="outlined-basic"
         className="input"
@@ -32,6 +32,9 @@ const TextFields = ({
         placeholder={placeholder}
         required
         value={value}
+        status={
+          value === "" || value === undefined || value === null ? "error" : ""
+        }
       />
     </div>
   );
